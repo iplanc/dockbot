@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 #Author: PlanC
 #Date: 2023-02-03 19:28:42
-#LastEditTime: 2023-02-04 09:29:46
+#LastEditTime: 2023-02-04 10:01:25
 #FilePath: \dockbot\start.py
 #
 
@@ -19,11 +19,11 @@ class MyClient(botpy.Client):
             create_docker(message.author.id)
             await self.api.post_message(channel_id=message.channel_id, content="已创建" + message.author.id, msg_id=message.id)
         elif "/删除" in message.content:
-            remove_docker(message.author.id)
+            docker_id = re.sub(r" +", r" ", message.content.strip()).split(" ")[2][2:-1]
+            remove_docker(docker_id)
             await self.api.post_message(channel_id=message.channel_id, content="已删除" + message.author.id, msg_id=message.id)
         elif "/停止" in message.content:
-            docker_id = re.sub(r" +", r" ", message.content.strip()).split(" ")[2][2:-1]
-            stop_docker(docker_id)
+            stop_docker(message.author.id)
             await self.api.post_message(channel_id=message.channel_id, content="已停止" + docker_id, msg_id=message.id)
         elif "/启动" in message.content:
             start_docker(message.author.id)
